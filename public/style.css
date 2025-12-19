@@ -1,0 +1,361 @@
+body {
+  background: #0e1824;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* Brand colors */
+:root {
+  --brand-orange: #ff8a00;
+  --brand-black: #0d1117;
+  --surface: #0f1b2b;
+  --surface-2: #132238;
+  --text: #dbe5f1;
+  --muted: #9fb3c8;
+  --overlay: rgba(0,0,0,.55);
+  --nav-offset: 80px;
+}
+.hero-section {
+  min-height: 400px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.hero-section .container {
+  position: relative;
+  z-index: 2;
+}
+.hero-bg {
+  min-height: 400px;
+  max-height: 600px;
+  opacity: 0.9;
+}
+.card.house-card {
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  background: var(--surface);
+  color: var(--text);
+}
+.card.house-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.card.house-card .card-body {
+  transition: background 0.2s;
+}
+.card.house-card:hover .card-body {
+  background: linear-gradient(180deg, rgba(19,34,56,0.6), rgba(19,34,56,0.9));
+}
+.card-img-top {
+  border-radius: 1.2rem 1.2rem 0 0;
+  object-fit: cover;
+  height: 220px;
+}
+#houses-list .card-body {
+  padding-bottom: 1.2rem;
+}
+#houses-list .btn-fav {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  background: rgba(255,255,255,0.8);
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  color: #e74c3c;
+  transition: background 0.2s;
+}
+#houses-list .btn-fav:hover {
+  background: #ffe6e6;
+}
+
+/* Use brand color for favorite icon */
+#houses-list .btn-fav {
+  color: var(--brand-orange);
+}
+
+/* Fancy filter toolbar */
+.filters-bar {
+  border-radius: 16px;
+  background: var(--surface);
+  padding: 12px 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+  color: var(--text);
+}
+
+.filter-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+.filter-toolbar .btn {
+  border-radius: 999px;
+  padding: 10px 18px;
+  border-color: transparent;
+  color: var(--text);
+  background: var(--surface-2);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.2);
+}
+.filter-toolbar .btn .badge {
+  background: var(--brand-orange) !important;
+}
+.filter-toolbar .btn.active,
+.filter-toolbar .btn:hover,
+.filter-toolbar .btn:focus {
+  color: #fff;
+  background: var(--brand-orange);
+  border-color: transparent;
+  box-shadow: 0 0 0 .2rem rgba(255,138,0,.2);
+}
+
+/* Subtle appear animation for cards */
+.animate-fade { margin-top: 12px; }
+.animate-fade > div { opacity: 0; transform: translateY(8px); animation: fadeUp .35s ease forwards; }
+/* Larger spacing between toolbar and cards */
+.filters-bar + .animate-fade { margin-top: 22px; }
+
+/* Compact top filter row */
+.filters-panel { background: var(--surface); color: var(--text); border-radius: 12px; padding: 14px 16px; box-shadow: 0 2px 10px rgba(0,0,0,.35); }
+.filter-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.8fr auto;
+  gap: 14px;
+  align-items: end;
+}
+.filter-item .form-control, .filter-item .form-select { height: 38px; }
+@media (max-width: 992px) {
+  .filter-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 576px) {
+  .filter-grid { grid-template-columns: 1fr; }
+}
+.animate-fade > div:nth-child(2) { animation-delay: .02s }
+.animate-fade > div:nth-child(3) { animation-delay: .04s }
+.animate-fade > div:nth-child(4) { animation-delay: .06s }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0) } }
+footer {
+  margin-top: 2rem;
+}
+
+/* Global dark theme adjustments */
+.theme-dark, .theme-dark body {
+  background: #0e1824;
+  color: var(--text);
+}
+.admin-main { background: #0e1824; color: var(--text); min-height: 100vh; }
+.admin-header { background: #0b1320 !important; color: var(--text); }
+.admin-sidebar { background: #0b1320 !important; color: var(--text); }
+.admin-sidebar .nav-link { color: #dbe5f1; }
+.admin-sidebar .nav-link.active, .admin-sidebar .nav-link:hover { color: #fff; background: rgba(255,138,0,0.15); border-radius: 8px; }
+
+/* Admin panel cards and forms adopt dark surface */
+.admin-main .card {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid #1f2f4a;
+}
+.theme-dark .form-label { color: var(--text); }
+.theme-dark .btn-primary { background: var(--brand-orange); border-color: var(--brand-orange); color: #111; }
+.theme-dark .btn-primary:hover { background: #ffa640; border-color: #ffa640; color: #111; }
+.theme-dark .badge.bg-primary { background-color: var(--brand-orange) !important; color: #111; }
+.theme-dark .alert-info { background: rgba(255,138,0,0.1); color: var(--text); border-color: rgba(255,138,0,0.25); }
+.theme-dark .navbar, .theme-dark .bg-dark { background-color: #0b1320 !important; }
+.theme-dark .card { color: var(--text); }
+.theme-dark .btn-outline-primary { color: var(--text); border-color: #1f2f4a; }
+.theme-dark .btn-outline-primary:hover { background: var(--brand-orange); border-color: var(--brand-orange); color: #111; }
+.theme-dark .form-control, .theme-dark .form-select { background: #0c1622; border-color: #1f2f4a; color: var(--text); }
+.theme-dark .form-control::placeholder { color: var(--muted); }
+.theme-dark .modal-content { background: var(--surface); color: var(--text); }
+/* Make modal close icon visible on dark backgrounds */
+.theme-dark .modal .btn-close { filter: invert(1); }
+.theme-dark .badge.bg-info { background-color: #1d3b64 !important; }
+.theme-dark .badge.bg-secondary { background-color: #2b3d57 !important; }
+.theme-dark .text-muted { color: var(--muted) !important; }
+.theme-dark .text-white-50 { color: var(--muted) !important; }
+.theme-dark .text-white { color: var(--text) !important; }
+.theme-dark footer.bg-dark { background-color: #0b1320 !important; }
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: 220px;
+    padding: 2rem 0 1rem 0;
+  }
+  .card-img-top {
+    height: 140px;
+  }
+} 
+
+/* Feedback feature removed */
+
+/* Amenities styling */
+.amenities-section h6 {
+  font-size: 1.05rem;
+  color: var(--text);
+}
+.amenities-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+.amenity-item {
+  padding: 8px 12px;
+  background: var(--surface-2);
+  border-radius: 8px;
+}
+.amenity-label {
+  font-size: 0.98rem;
+  color: var(--text);
+}
+.amenity-status {
+  font-size: 0.9rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+.amenity-status.yes {
+  background: var(--brand-orange);
+  color: #111;
+}
+.amenity-status.no {
+  background: #2b3d57;
+  color: #c9d5e6;
+}
+
+/* About/Contact section theme */
+#about-contact {
+  background: #0b1320 !important; /* blue-black */
+  color: #fff;
+}
+#about-contact .card {
+  background: var(--surface);
+  color: var(--text);
+  border: none;
+}
+
+/* Admin card styling */
+.admin-card {
+  background: var(--surface-2);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+.admin-header { font-size: 1rem; color: var(--text); margin-bottom: 6px; }
+.admin-title { font-weight: 600; }
+.admin-row { display: flex; align-items: center; gap: 10px; padding: 8px 8px; border-radius: 8px; color: var(--text); text-decoration: none; transition: background .2s, transform .2s; }
+.admin-row:hover { background: rgba(255,138,0,0.12); transform: translateY(-1px); }
+.admin-icon { color: var(--brand-orange); width: 16px; text-align: center; }
+.status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.status-dot.online { background: #29c770; box-shadow: 0 0 0 3px rgba(41,199,112,0.15); }
+
+/* Mobile nav: animated hamburger and slide-in menu */
+.custom-hamburger { border: none; background: transparent; width: 44px; height: 34px; position: relative; display: flex; align-items: center; justify-content: center; }
+.custom-hamburger span { display: block; position: absolute; width: 26px; height: 2px; background: #fff; border-radius: 2px; transition: transform .25s ease, opacity .2s ease, top .25s ease; }
+.custom-hamburger span:nth-child(1) { top: 10px; }
+.custom-hamburger span:nth-child(2) { top: 16px; }
+.custom-hamburger span:nth-child(3) { top: 22px; }
+.custom-hamburger.active span:nth-child(1) { top: 16px; transform: rotate(45deg); }
+.custom-hamburger.active span:nth-child(2) { opacity: 0; }
+.custom-hamburger.active span:nth-child(3) { top: 16px; transform: rotate(-45deg); }
+
+#mobile-nav-overlay { position: fixed; inset: 0; background: var(--overlay); opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility .25s ease; z-index: 2000; }
+#mobile-nav-overlay.show { opacity: 1; visibility: visible; }
+
+@media (max-width: 991.98px) {
+  .navbar-collapse { position: fixed; top: 56px; right: -280px; width: 260px; height: calc(100vh - 56px); background: #0b1320; padding: 16px; box-shadow: -8px 0 24px rgba(0,0,0,.35); transition: right .25s ease; z-index: 2001; }
+  .navbar-collapse.show { right: 0; }
+  .navbar-nav .nav-link { padding: 10px 8px; border-radius: 8px; }
+  .navbar-nav .nav-link:hover { background: rgba(255,138,0,0.15); }
+  .mobile-lang { position: absolute; left: 16px; right: 16px; bottom: 16px; }
+}
+
+/* Ensure navbar itself stays on top of content */
+.navbar { z-index: 2002; }
+
+/* Smooth anchor scrolling and offset so fixed navbar doesn't cover target */
+html { scroll-behavior: smooth; }
+[id] { scroll-margin-top: var(--nav-offset); }
+
+/* Property detail page readability */
+.property-detail-page {
+  color: var(--text);
+}
+.property-detail-page h1,
+.property-detail-page h2,
+.property-detail-page h3,
+.property-detail-page h4,
+.property-detail-page h5,
+.property-detail-page h6,
+.property-detail-page p,
+.property-detail-page li,
+.property-detail-page a {
+  color: var(--text);
+}
+.property-detail-page .text-muted {
+  color: #cfd8e3 !important;
+}
+.property-detail-page .section-label {
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+.property-detail-page .contact-links a {
+  color: var(--text);
+  text-decoration: none;
+}
+.property-detail-page .contact-links a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+.property-detail-page .amenity-badge {
+  background: rgba(41, 199, 112, 0.15);
+  color: #9ef0c0;
+  border: 1px solid rgba(41, 199, 112, 0.4);
+}
+
+/* Broker dashboard readability */
+.broker-page {
+  color: var(--text);
+}
+.broker-page .card {
+  background: var(--surface);
+  color: var(--text);
+}
+.broker-page h5,
+.broker-page h6,
+.broker-page label {
+  color: var(--text);
+}
+.broker-page .form-control,
+.broker-page .form-select {
+  background: #0c1622;
+  border-color: #1f2f4a;
+  color: var(--text);
+}
+.broker-page .form-control::placeholder {
+  color: var(--muted);
+}
+.broker-page .btn-primary {
+  background: var(--brand-orange);
+  border-color: var(--brand-orange);
+  color: #111;
+}
+.broker-page .btn-primary:hover {
+  background: #ffa640;
+  border-color: #ffa640;
+  color: #111;
+}

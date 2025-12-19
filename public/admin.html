@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - House Rent</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body class="theme-dark">
+  <div class="d-flex" style="min-height: 100vh;">
+    <!-- Sidebar -->
+    <nav class="admin-sidebar p-3" style="width: 220px; min-height: 100vh;">
+      <h3 class="fw-bold mb-4">Admin Panel</h3>
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2"><a class="nav-link text-white active" id="sidebar-houses-link" href="#">Current Listings</a></li>
+        <li class="nav-item mb-2"><a class="nav-link text-white" id="sidebar-brokers-link" href="#">Broker Requests</a></li>
+        
+        <li class="nav-item mb-2"><a class="nav-link text-white" href="index.html" target="_blank">View Website</a></li>
+      </ul>
+      <div class="mt-auto pt-5 small">&copy; 2025 House Rent</div>
+    </nav>
+    <!-- Main Content -->
+    <div class="flex-grow-1 admin-main">
+      <header class="admin-header shadow-sm p-3 mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2 class="mb-0">Current Listings</h2>
+        </div>
+      </header>
+      <div class="container-fluid">
+        <!-- House Management Section -->
+        <div id="houses-section" class="admin-section" style="display: block;">
+          <div class="row g-4">
+            <!-- Add House Form + Live Preview -->
+            <div class="col-lg-4">
+              <div class="card p-4 mb-4">
+                <h5 class="mb-3">Add New House</h5>
+              <form id="add-house-form" enctype="multipart/form-data">
+                <div class="alert alert-info py-2 small mb-2">Admin Panel</div>
+                <input type="text" name="admin_name" class="form-control mb-2" placeholder="Admin Name" autocomplete="name" required>
+                <input type="email" name="admin_email" class="form-control mb-2" placeholder="Admin Email" autocomplete="email" required>
+                <input type="tel" name="admin_phone" class="form-control mb-2" placeholder="Admin Phone" autocomplete="tel" required>
+                <input type="text" name="title" class="form-control mb-2" placeholder="Title (English)" required id="preview-title" >
+                <input type="text" name="title_en" class="form-control mb-2" placeholder="Title (English)" required>
+                <input type="text" name="title_am" class="form-control mb-2" placeholder="Title (Amharic)">
+                <input type="text" name="title_ti" class="form-control mb-2" placeholder="Title (Tigrinya)">
+                <label class="form-label mb-1">Type</label>
+                <select name="type" class="form-select mb-2" id="preview-type" required>
+                  <option value="">Select type</option>
+                  <option value="house">House</option>
+                  <option value="apartment">Apartment</option>
+                  <option value="company">For Companies</option>
+                </select>
+                <textarea name="description" class="form-control mb-2" placeholder="Description (English)" required id="preview-description"></textarea>
+                <textarea name="description_en" class="form-control mb-2" placeholder="Description (English)" required></textarea>
+                <textarea name="description_am" class="form-control mb-2" placeholder="Description (Amharic)"></textarea>
+                <textarea name="description_ti" class="form-control mb-2" placeholder="Description (Tigrinya)"></textarea>
+                <input type="number" name="price" class="form-control mb-1" placeholder="Price" required id="preview-price">
+                <div class="form-text text-muted mb-2" id="add-price-formatted">Formatted: 0 Birr</div>
+                <div id="add-bedrooms-group">
+                  <input type="number" name="bedrooms" class="form-control mb-2" placeholder="Bedrooms" min="1" max="10" id="preview-bedrooms">
+                </div>
+                <div class="row g-2">
+                  <div class="col-6">
+                    <label class="form-label mb-1">City</label>
+                    <select name="city" class="form-select mb-2" id="preview-city" required>
+                      <option value="">Select city</option>
+                      <option value="Adigrat">Adigrat</option>
+                      <option value="Mekelle">Mekelle</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label mb-1">Status</label>
+                    <select name="status" class="form-select mb-2" id="preview-status" required>
+                      <option value="available" selected>Available</option>
+                      <option value="pending">Pending</option>
+                      <option value="rented">Rented</option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label mb-1">Amenities</label>
+                    <div class="row g-2 small">
+                      <div class="col-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="amenity-water" name="amenity_water"><label class="form-check-label" for="amenity-water">Water Access</label></div></div>
+                      <div class="col-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="amenity-electricity" name="amenity_electricity"><label class="form-check-label" for="amenity-electricity">Electricity Access</label></div></div>
+                      <div class="col-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="amenity-internet" name="amenity_internet"><label class="form-check-label" for="amenity-internet">Internet / Wi‑Fi Access</label></div></div>
+                      <div class="col-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="amenity-parking" name="amenity_parking"><label class="form-check-label" for="amenity-parking">Parking</label></div></div>
+                    </div>
+                  </div>
+                  <div class="col-12" id="apartment-only-add">
+                    <label class="form-label mb-1">Apartment Options</label>
+                    <div class="row g-2">
+                      <div class="col-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="amenity-lift" name="amenity_lift"><label class="form-check-label" for="amenity-lift">Lift / Elevator</label></div></div>
+                      <div class="col-6"><input type="number" class="form-control" name="floor" id="preview-floor" placeholder="Floor (optional)"></div>
+                    </div>
+                  </div>
+                </div>
+                <input type="text" name="location" class="form-control mb-2" placeholder="Location" id="preview-location">
+                <label class="form-label small text-muted">Images (Select multiple - up to 10)</label>
+                <input type="file" name="images" class="form-control mb-2" accept="image/*" required id="preview-images" multiple>
+                <div id="image-preview-container" class="mb-2"></div>
+                <button type="submit" class="btn btn-primary w-100">Add New House</button>
+              </form>
+            </div>
+            <!-- Live Preview Card -->
+            <div class="card house-card shadow-sm mb-4" id="live-preview-card">
+              <img src="https://via.placeholder.com/400x220?text=House+Image" class="card-img-top" id="live-preview-img" alt="House image">
+              <div class="card-body">
+                <h5 class="card-title" id="live-preview-title">Title</h5>
+                <p class="card-text" id="live-preview-description">Description...</p>
+                <div class="fw-bold text-primary mb-2" id="live-preview-price">$0</div>
+                <div class="mb-1"><span class="badge bg-secondary" id="live-preview-bedrooms">N/A BR</span> <span class="badge bg-info" id="live-preview-location">N/A</span></div>
+                <div class="mb-1"><span class="badge bg-dark" id="live-preview-city">City</span> <span class="badge bg-warning text-dark" id="live-preview-type">Type</span></div>
+                <div><span class="badge" id="live-preview-status">Available</span></div>
+              </div>
+            </div>
+          </div>
+          <!-- Listings -->
+          <div class="col-lg-8">
+            <div class="card p-4">
+              <h5 class="mb-3">Current Listings</h5>
+              <div id="admin-houses-list" class="row g-4"></div>
+            </div>
+          </div>
+        </div>
+        </div>
+        
+        <!-- Broker Requests Section -->
+        <div id="brokers-section" class="admin-section" style="display:none;">
+          <div class="row g-4">
+            <div class="col-12">
+              <div class="card p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <h5 class="mb-0">Broker Requests</h5>
+                </div>
+                <div id="admin-broker-requests" class="row g-3"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Edit House Modal -->
+  <div class="modal fade" id="editHouseModal" tabindex="-1" aria-labelledby="editHouseModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="edit-house-form" enctype="multipart/form-data">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editHouseModalLabel">Edit House</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-3">
+            <div class="mb-3">
+              <div class="alert alert-info py-2 small mb-2">Admin Info</div>
+              <div class="row g-2">
+                <div class="col-12 col-md-4"><input type="text" class="form-control" name="admin_name" id="edit-admin-name" placeholder="Admin Name" required></div>
+                <div class="col-12 col-md-4"><input type="email" class="form-control" name="admin_email" id="edit-admin-email" placeholder="Admin Email" required></div>
+                <div class="col-12 col-md-4"><input type="tel" class="form-control" name="admin_phone" id="edit-admin-phone" placeholder="Admin Phone" required></div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="edit-title" class="form-label">Title</label>
+              <input type="text" class="form-control" id="edit-title" name="title" required>
+            </div>
+            <div class="mb-3">
+              <label for="edit-description" class="form-label">Description</label>
+              <textarea class="form-control" id="edit-description" name="description" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="edit-price" class="form-label">Price</label>
+              <input type="number" class="form-control mb-1" id="edit-price" name="price" required>
+              <div class="form-text text-muted" id="edit-price-formatted">Formatted: 0 Birr</div>
+            </div>
+            <div class="mb-3 row g-2">
+              <div class="col-6">
+                <label for="edit-city" class="form-label">City</label>
+                <select class="form-select" id="edit-city" name="city" required>
+                  <option value="Adigrat">Adigrat</option>
+                  <option value="Mekelle">Mekelle</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label for="edit-type" class="form-label">Type</label>
+                <select class="form-select" id="edit-type" name="type" required>
+                  <option value="house">House</option>
+                  <option value="apartment">Apartment</option>
+                  <option value="company">For Companies</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="edit-status" class="form-label">Status</label>
+              <select class="form-select" id="edit-status" name="status" required>
+                <option value="available">Available</option>
+                <option value="pending">Pending</option>
+                <option value="rented">Rented</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Amenities</label>
+              <div class="row g-2 small">
+                <div class="col-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="edit-amenity-water" name="amenity_water"><label class="form-check-label" for="edit-amenity-water">Water Access</label></div></div>
+                <div class="col-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="edit-amenity-electricity" name="amenity_electricity"><label class="form-check-label" for="edit-amenity-electricity">Electricity Access</label></div></div>
+                <div class="col-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="edit-amenity-internet" name="amenity_internet"><label class="form-check-label" for="edit-amenity-internet">Internet / Wi‑Fi Access</label></div></div>
+                <div class="col-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="edit-amenity-parking" name="amenity_parking"><label class="form-check-label" for="edit-amenity-parking">Parking</label></div></div>
+              </div>
+            </div>
+            <div class="mb-3" id="apartment-only-edit">
+              <label class="form-label">Apartment Options</label>
+              <div class="row g-2">
+                <div class="col-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="edit-amenity-lift" name="amenity_lift"><label class="form-check-label" for="edit-amenity-lift">Lift / Elevator</label></div></div>
+                <div class="col-6"><input type="number" class="form-control" id="edit-floor" name="floor" placeholder="Floor (optional)"></div>
+              </div>
+            </div>
+            <div class="mb-3" id="edit-bedrooms-group">
+              <label for="edit-bedrooms" class="form-label">Bedrooms</label>
+              <input type="number" class="form-control" id="edit-bedrooms" name="bedrooms" min="1" max="10">
+            </div>
+            <div class="mb-3">
+              <label for="edit-location" class="form-label">Location</label>
+              <input type="text" class="form-control" id="edit-location" name="location">
+            </div>
+            <div class="mb-3">
+              <label for="edit-image" class="form-label">Images</label>
+              <input type="file" class="form-control" id="edit-image" name="images" accept="image/*" multiple>
+              <img id="edit-preview-img" src="https://via.placeholder.com/400x220?text=House+Image" class="img-fluid rounded mt-2" style="max-height:180px;" alt="Preview">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- cache-bust to ensure latest admin logic -->
+  <script src="script.js?v=admin8"></script>
+  <script src="i18n.js"></script>
+</body>
+</html> 

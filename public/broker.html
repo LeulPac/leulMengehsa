@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broker Dashboard - Property Brokerage</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body class="theme-dark broker-page">
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">Property Brokerage</a>
+      <a class="btn btn-outline-light btn-sm" href="index.html"><i class="fa-solid fa-arrow-left me-2"></i>Back to site</a>
+    </div>
+  </nav>
+
+  <main class="container my-4">
+    <div class="row g-4">
+      <!-- Broker verification / login -->
+      <div class="col-lg-3">
+        <div class="card p-4 mb-4">
+          <h5 class="mb-3">Broker Access</h5>
+          <p class="small text-muted mb-3">Login with your broker username and password to submit listings for admin approval.</p>
+          <form id="broker-auth-form">
+            <div class="mb-2">
+              <label class="form-label">Username</label>
+              <input type="text" class="form-control" name="username" placeholder="Enter any username" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-control" name="password" placeholder="Enter broker password" required>
+              <div class="form-text small text-muted">Use the broker password provided by the admin.</div>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 mb-2">Login</button>
+            <div id="broker-status" class="small mt-2 text-muted">Status: Not verified</div>
+          </form>
+        </div>
+        <div class="card p-3 small">
+          <h6 class="mb-2">How it works</h6>
+          <ol class="mb-0 ps-3">
+            <li>Enter any <strong>username</strong> you want to use.</li>
+            <li>Type broker <strong>password</strong> and click <strong>Login</strong>.</li>
+            <li>After login, fill in the property details and submit for admin approval.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Broker listing submission -->
+      <div class="col-lg-9">
+        <div id="broker-listing-card" class="card p-4 mb-4" style="display:none;">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0">Submit Listing for Approval</h5>
+            <span id="broker-approval-badge" class="badge bg-secondary">Not verified</span>
+          </div>
+          <div id="broker-approval-help" class="alert alert-info py-2 small mb-3">
+            Verify your broker account first to submit listings.
+          </div>
+          <form id="broker-listing-form" enctype="multipart/form-data">
+            <!-- Contact Info -->
+            <div class="alert alert-secondary py-2 small mb-2">Your Contact Info (will appear on listing)</div>
+            <div class="row g-2 mb-3">
+              <div class="col-md-4">
+                <input type="text" name="contact_name" class="form-control" placeholder="Your Name" required>
+              </div>
+              <div class="col-md-4">
+                <input type="email" name="contact_email" class="form-control" placeholder="Your Email" required>
+              </div>
+              <div class="col-md-4">
+                <input type="tel" name="contact_phone" class="form-control" placeholder="Your Phone" required>
+              </div>
+            </div>
+
+            <!-- Property Details -->
+            <div class="alert alert-secondary py-2 small mb-2">Property Details</div>
+            <div class="row g-2 mb-2">
+              <div class="col-md-8">
+                <input type="text" name="title" class="form-control" placeholder="Listing Title" required>
+              </div>
+              <div class="col-md-4">
+                <select name="type" id="broker-type-select" class="form-select" required>
+                  <option value="">Select Type</option>
+                  <option value="house">House</option>
+                  <option value="apartment">Apartment</option>
+                  <option value="land">Land</option>
+                  <option value="company">For Companies</option>
+                </select>
+              </div>
+            </div>
+            
+            <textarea name="description" class="form-control mb-2" rows="3" placeholder="Full Description" required></textarea>
+            
+            <div class="row g-2 mb-2">
+              <div class="col-md-3">
+                <input type="number" name="price" class="form-control" placeholder="Price (Birr)" required>
+              </div>
+              <div class="col-md-3" id="broker-bedrooms-group">
+                <input type="number" name="bedrooms" class="form-control" placeholder="Bedrooms" min="1" max="10">
+              </div>
+              <div class="col-md-3">
+                <select name="city" class="form-select" required>
+                  <option value="">Select City</option>
+                  <option value="Adigrat">Adigrat</option>
+                  <option value="Mekelle">Mekelle</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <input type="text" name="location" class="form-control" placeholder="Location / Area" required>
+              </div>
+            </div>
+
+            <!-- Amenities -->
+            <div class="mb-3">
+              <label class="form-label small text-muted mb-1">Amenities</label>
+              <div class="row g-2 small">
+                <div class="col-6 col-md-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="broker-amenity-water" name="amenity_water">
+                    <label class="form-check-label" for="broker-amenity-water">Water Access</label>
+                  </div>
+                </div>
+                <div class="col-6 col-md-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="broker-amenity-electricity" name="amenity_electricity">
+                    <label class="form-check-label" for="broker-amenity-electricity">Electricity</label>
+                  </div>
+                </div>
+                <div class="col-6 col-md-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="broker-amenity-internet" name="amenity_internet">
+                    <label class="form-check-label" for="broker-amenity-internet">Internet / Wi-Fi</label>
+                  </div>
+                </div>
+                <div class="col-6 col-md-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="broker-amenity-parking" name="amenity_parking">
+                    <label class="form-check-label" for="broker-amenity-parking">Parking</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Apartment Only Options -->
+            <div id="broker-apartment-options" class="mb-3" style="display:none;">
+              <label class="form-label small text-muted mb-1">Apartment Options</label>
+              <div class="row g-2">
+                <div class="col-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="broker-amenity-lift" name="amenity_lift">
+                    <label class="form-check-label" for="broker-amenity-lift">Lift / Elevator</label>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <input type="number" class="form-control form-control-sm" name="floor" placeholder="Floor number">
+                </div>
+              </div>
+            </div>
+
+            <!-- Images -->
+            <div class="mb-3">
+              <label class="form-label small text-muted">Images (up to 10)</label>
+              <input type="file" name="images" class="form-control" accept="image/*" multiple required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+              <i class="fa-solid fa-paper-plane me-2"></i>Send to Admin for Approval
+            </button>
+          </form>
+        </div>
+
+        <div id="broker-requests-card" class="card p-4" style="display:none;">
+          <h5 class="mb-3">Your Requests</h5>
+          <div id="broker-requests-list" class="row g-3 small">
+            <div class="col-12 text-muted">No requests yet.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="broker.js"></script>
+</body>
+</html>
